@@ -140,7 +140,7 @@ function SubmitCta() {
 function Marquee() {
   const text = "OPEN CALL — SUBMIT YOUR WORK — COVENTRY GDMA — ";
   return (
-    <div className="relative z-20 my-10 origin-center -skew-y-1 overflow-hidden border-y-2 border-accent-2 bg-foreground/[0.03] py-3 sm:my-16">
+    <div className="relative z-20 mt-10 mb-20 origin-center -skew-y-1 overflow-hidden border-y-2 border-accent-2 bg-foreground/[0.03] py-3 sm:mt-16 sm:mb-28">
       <div className="animate-marquee flex w-max gap-8 whitespace-nowrap font-display text-2xl uppercase text-accent-2 sm:text-4xl">
         <span>{text.repeat(6)}</span>
         <span>{text.repeat(6)}</span>

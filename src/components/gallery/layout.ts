@@ -1,9 +1,14 @@
-// Deterministic per-index layout variation for a scattered, overlapping
-// collage rhythm: a flex-wrap container (see GalleryGrid) lets multiple
-// pieces share a row when their widths allow it, and negative-margin
-// offsets pull items up into the row above for an overlapping feel —
-// inspired by eloyb.design's spacious, non-uniform composition, pushed
-// further into an actual broken/overlapping layout per feedback.
+import { seededPick } from "@/lib/seededRandom";
+
+// Layout variation for a scattered, overlapping collage rhythm: a flex-wrap
+// container (see GalleryGrid) lets multiple pieces share a row when their
+// widths allow it, and negative-margin offsets pull items up into the row
+// above for an overlapping feel.
+//
+// `sessionSeed` reshuffles which width/offset each piece gets — passing 0
+// (the default, used for the server-rendered/first-paint markup) gives a
+// stable baseline arrangement; GalleryGrid randomizes it client-side after
+// mount so the arrangement is different on every visit/refresh.
 
 const WIDTHS = [
   "w-full sm:w-1/2 lg:w-2/5",
@@ -29,9 +34,9 @@ const OFFSETS = [
   "sm:mt-8",
 ];
 
-export function layoutForIndex(i: number) {
+export function layoutForIndex(i: number, sessionSeed = 0) {
   return {
-    width: WIDTHS[i % WIDTHS.length],
-    offset: OFFSETS[i % OFFSETS.length],
+    width: seededPick(WIDTHS, i * 7919 + sessionSeed),
+    offset: seededPick(OFFSETS, i * 104729 + sessionSeed),
   };
 }
