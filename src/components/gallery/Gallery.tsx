@@ -95,8 +95,9 @@ function Hero({ count }: { count: number }) {
         style={{ rotateX: rx, rotateY: ry }}
         className="select-none font-display uppercase leading-[0.78] text-[19vw] sm:text-[12vw]"
       >
-        <ScrambleText as="div" text="STUDENT" className="mt-6 block text-accent" />
+        <ScrambleText auto as="div" text="STUDENT" className="mt-6 block text-accent" />
         <ScrambleText
+          auto
           as="div"
           text="WORK"
           className="-mt-[0.12em] block translate-x-[6vw] text-transparent [-webkit-text-stroke:2px_var(--accent-2)] sm:[-webkit-text-stroke:3px_var(--accent-2)]"
@@ -122,8 +123,8 @@ function SubmitCta() {
     <section className="border-t border-border px-6 py-24 sm:py-40">
       <Link href="/submit" className="group block">
         <span className="block font-display uppercase leading-[0.85] text-[15vw] transition-colors duration-300 group-hover:text-accent sm:text-[9vw]">
-          <ScrambleText as="span" text="CLICK TO" className="block" />
-          <ScrambleText as="span" text="SUBMIT →" className="block" />
+          <ScrambleText auto as="span" text="CLICK TO" className="block" />
+          <ScrambleText auto as="span" text="SUBMIT →" className="block" />
         </span>
       </Link>
 
@@ -139,7 +140,7 @@ function SubmitCta() {
 function Marquee() {
   const text = "OPEN CALL — SUBMIT YOUR WORK — COVENTRY GDMA — ";
   return (
-    <div className="relative -my-2 origin-center -skew-y-1 overflow-hidden border-y-2 border-accent-2 bg-foreground/[0.03] py-3">
+    <div className="relative z-20 my-10 origin-center -skew-y-1 overflow-hidden border-y-2 border-accent-2 bg-foreground/[0.03] py-3 sm:my-16">
       <div className="animate-marquee flex w-max gap-8 whitespace-nowrap font-display text-2xl uppercase text-accent-2 sm:text-4xl">
         <span>{text.repeat(6)}</span>
         <span>{text.repeat(6)}</span>

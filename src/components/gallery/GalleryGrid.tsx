@@ -7,6 +7,13 @@ import ScrambleText from "@/components/ScrambleText";
 import { layoutForIndex } from "./layout";
 import type { GalleryItem } from "./types";
 
+// Deterministic pseudo-random in [0, 1), seeded by index — same value on
+// server and client (avoids hydration mismatches from Math.random()).
+function seededRandom(seed: number) {
+  const x = Math.sin(seed * 9301 + 49297) * 233280;
+  return x - Math.floor(x);
+}
+
 export default function GalleryGrid({
   items,
   registerSlot,
@@ -29,7 +36,7 @@ export default function GalleryGrid({
   }
 
   return (
-    <div className="flex flex-col gap-16 px-6 pb-48 sm:gap-24">
+    <div className="flex flex-wrap gap-x-6 gap-y-16 px-6 pb-48 sm:gap-x-10">
       {items.map((item, i) => {
         const layout = layoutForIndex(i);
         return (
@@ -39,7 +46,7 @@ export default function GalleryGrid({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className={`relative z-20 ${layout.width} ${layout.align}`}
+            className={`relative z-20 ${layout.width} ${layout.offset}`}
           >
             <button
               onClick={() => onSelect(item)}
@@ -59,6 +66,8 @@ export default function GalleryGrid({
                 {
                   aspectRatio: `${item.width} / ${item.height}`,
                   "--glitch-bg": `url(${item.thumb_url})`,
+                  "--glitch-duration": `${6 + seededRandom(i) * 6}s`,
+                  "--glitch-delay": `${seededRandom(i + 100) * 8}s`,
                 } as CSSProperties
               }
             >
