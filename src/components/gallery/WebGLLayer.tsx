@@ -1,8 +1,10 @@
 "use client";
 
-import { Suspense, useEffect, useRef } from "react";
+import { Suspense, useEffect, useMemo, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
+import { EffectComposer } from "@react-three/postprocessing";
+import { LensDistortionEffect } from "postprocessing";
 import * as THREE from "three";
 import { fragmentShader, vertexShader } from "./shader";
 import type { GalleryItem } from "./types";
@@ -42,15 +44,17 @@ function ImagePlane({
     const el = getEl();
     const mesh = meshRef.current;
     const material = materialRef.current;
-    if (!el || !mesh || !material || el.offsetWidth === 0) {
-      if (mesh) mesh.visible = false;
+    if (!el || !mesh || !material) return;
+
+    // getBoundingClientRect is transform-aware, so it reflects the canvas's
+    // current pan/zoom — using it (rather than offsetWidth/Height) is what
+    // lets the mesh scale correctly as the world zooms in and out.
+    const rect = el.getBoundingClientRect();
+    if (rect.width === 0) {
+      mesh.visible = false;
       return;
     }
     mesh.visible = true;
-
-    const rect = el.getBoundingClientRect();
-    const width = el.offsetWidth;
-    const height = el.offsetHeight;
 
     hoverValue.current = THREE.MathUtils.damp(hoverValue.current, hovered ? 1 : 0, 5, delta);
 
@@ -58,10 +62,9 @@ function ImagePlane({
     const pop = 1 + hoverValue.current * 0.08;
     mesh.position.x = rect.left + rect.width / 2 - innerWidth / 2;
     mesh.position.y = -(rect.top + rect.height / 2 - innerHeight / 2);
-    mesh.scale.set(width * pop, height * pop, 1);
+    mesh.scale.set(rect.width * pop, rect.height * pop, 1);
 
-    const rawVelocity = velocityRef.current ?? 0;
-    const targetSkew = (THREE.MathUtils.clamp(rawVelocity, -80, 80) * 0.35) / width;
+    const targetSkew = (velocityRef.current ?? 0) * 0.15;
 
     material.uniforms.uHover.value = hoverValue.current;
     material.uniforms.uTime.value = state.clock.elapsedTime;
@@ -108,6 +111,21 @@ function Scene({ items, slotRefs, hoveredId, velocityRef }: Props) {
   );
 }
 
+function Curvature() {
+  // Subtle barrel distortion so the canvas reads as a curved, wrapping
+  // space rather than a flat plane — kept gentle to keep artwork legible.
+  const effect = useMemo(
+    () =>
+      new LensDistortionEffect({
+        distortion: new THREE.Vector2(0.06, 0.06),
+        principalPoint: new THREE.Vector2(0, 0),
+        focalLength: new THREE.Vector2(1, 1),
+      }),
+    []
+  );
+  return <primitive object={effect} />;
+}
+
 export default function WebGLLayer(props: Props) {
   return (
     <div className="pointer-events-none fixed inset-0 z-10">
@@ -120,6 +138,9 @@ export default function WebGLLayer(props: Props) {
         <Suspense fallback={null}>
           <Scene {...props} />
         </Suspense>
+        <EffectComposer>
+          <Curvature />
+        </EffectComposer>
       </Canvas>
     </div>
   );
