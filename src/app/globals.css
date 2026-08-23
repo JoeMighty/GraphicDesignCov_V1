@@ -106,3 +106,63 @@ html.has-custom-cursor * {
     animation: none;
   }
 }
+
+/* RGB-split glitch on hover — CSS-only fallback for the non-WebGL path
+   (the WebGL path gets its own chromatic-aberration shader instead, since
+   the DOM image is hidden there). Two colour-shifted duplicates of the
+   image, sliced and jittered on hover. */
+.glitch-frame {
+  isolation: isolate;
+}
+
+.glitch-frame::before,
+.glitch-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 15;
+  background-image: var(--glitch-bg);
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.glitch-frame::before {
+  filter: hue-rotate(-45deg) saturate(4);
+}
+
+.glitch-frame::after {
+  filter: hue-rotate(140deg) saturate(4);
+}
+
+.glitch-frame:hover::before {
+  opacity: 0.6;
+  animation: glitch-a 0.3s steps(2, jump-start) infinite;
+}
+
+.glitch-frame:hover::after {
+  opacity: 0.6;
+  animation: glitch-b 0.3s steps(2, jump-start) infinite;
+}
+
+@keyframes glitch-a {
+  0% { transform: translate(0, 0); clip-path: inset(15% 0 55% 0); }
+  50% { transform: translate(-6px, 1px); clip-path: inset(45% 0 25% 0); }
+  100% { transform: translate(4px, -2px); clip-path: inset(65% 0 8% 0); }
+}
+
+@keyframes glitch-b {
+  0% { transform: translate(0, 0); clip-path: inset(55% 0 15% 0); }
+  50% { transform: translate(6px, -1px); clip-path: inset(25% 0 45% 0); }
+  100% { transform: translate(-4px, 2px); clip-path: inset(8% 0 65% 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glitch-frame:hover::before,
+  .glitch-frame:hover::after {
+    animation: none;
+    opacity: 0;
+  }
+}

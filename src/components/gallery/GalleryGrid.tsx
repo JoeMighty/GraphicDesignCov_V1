@@ -1,8 +1,10 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import { motion } from "framer-motion";
 import { setCursorLabel } from "@/lib/cursorSignal";
-import { layoutForIndex, rotationClassForIndex } from "./layout";
+import ScrambleText from "@/components/ScrambleText";
+import { layoutForIndex } from "./layout";
 import type { GalleryItem } from "./types";
 
 export default function GalleryGrid({
@@ -37,50 +39,8 @@ export default function GalleryGrid({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className={`flex flex-col gap-4 ${layout.width} ${layout.align}`}
+            className={`${layout.width} ${layout.align}`}
           >
-            <div className="flex flex-wrap items-baseline justify-between gap-3 font-mono text-xs uppercase tracking-[0.15em]">
-              <span className="text-muted">
-                {String(i + 1).padStart(2, "0")} — <span className="text-foreground">{item.student_name}</span>
-                {item.title && <span className="text-muted"> — {item.title}</span>}
-              </span>
-              <span className="flex gap-3 text-muted">
-                {item.instagram_url && (
-                  <a
-                    href={item.instagram_url}
-                    target="_blank"
-                    rel="noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                    className="transition hover:text-accent"
-                  >
-                    [ig]
-                  </a>
-                )}
-                {item.behance_url && (
-                  <a
-                    href={item.behance_url}
-                    target="_blank"
-                    rel="noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                    className="transition hover:text-accent"
-                  >
-                    [behance]
-                  </a>
-                )}
-                {item.website_url && (
-                  <a
-                    href={item.website_url}
-                    target="_blank"
-                    rel="noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                    className="transition hover:text-accent"
-                  >
-                    [site]
-                  </a>
-                )}
-              </span>
-            </div>
-
             <button
               onClick={() => onSelect(item)}
               onMouseEnter={() => {
@@ -94,17 +54,76 @@ export default function GalleryGrid({
               onFocus={() => onHover(item.id)}
               onBlur={() => onHover(null)}
               ref={(el) => registerSlot(item.id, el)}
-              className={`group relative block w-full overflow-hidden bg-white/5 text-left ${rotationClassForIndex(i)}`}
-              style={{ aspectRatio: `${item.width} / ${item.height}` }}
+              className="glitch-frame group relative block w-full overflow-hidden bg-white/5 text-left transition-transform duration-300 ease-out hover:scale-[1.015]"
+              style={
+                {
+                  aspectRatio: `${item.width} / ${item.height}`,
+                  "--glitch-bg": `url(${item.thumb_url})`,
+                } as CSSProperties
+              }
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={item.thumb_url}
                 alt={item.title ?? `Work by ${item.student_name}`}
                 loading="lazy"
-                className="h-full w-full object-cover grayscale transition-[opacity,filter,transform] duration-500 ease-out group-hover:scale-[1.06] group-hover:grayscale-0"
+                className="h-full w-full object-cover grayscale transition-[opacity,filter] duration-500 ease-out group-hover:grayscale-0"
                 style={{ opacity: hideImages ? 0 : 1 }}
               />
+
+              {/* Persistent index tag */}
+              <span className="pointer-events-none absolute left-3 top-3 z-20 font-mono text-[10px] uppercase tracking-[0.15em] text-white/70 mix-blend-difference">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+
+              {/* Hover reveal — z-20 so it stays above the fixed WebGL canvas (z-10) */}
+              <span className="absolute inset-0 z-20 flex flex-col justify-end bg-gradient-to-t from-black/90 via-black/10 to-transparent p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:p-6">
+                <ScrambleText
+                  as="span"
+                  text={item.student_name}
+                  className="block font-display text-2xl uppercase leading-none text-white sm:text-3xl"
+                />
+                {item.title && (
+                  <span className="mt-2 block font-mono text-xs uppercase tracking-[0.15em] text-white/70">
+                    {item.title}
+                  </span>
+                )}
+                <span className="mt-3 flex gap-4 font-mono text-[10px] uppercase tracking-[0.15em] text-white/70">
+                  {item.instagram_url && (
+                    <a
+                      href={item.instagram_url}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="pointer-events-auto transition hover:text-accent"
+                    >
+                      [ig]
+                    </a>
+                  )}
+                  {item.behance_url && (
+                    <a
+                      href={item.behance_url}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="pointer-events-auto transition hover:text-accent"
+                    >
+                      [behance]
+                    </a>
+                  )}
+                  {item.website_url && (
+                    <a
+                      href={item.website_url}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="pointer-events-auto transition hover:text-accent"
+                    >
+                      [site]
+                    </a>
+                  )}
+                </span>
+              </span>
             </button>
           </motion.article>
         );

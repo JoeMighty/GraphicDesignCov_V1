@@ -5,7 +5,6 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
 import * as THREE from "three";
 import { fragmentShader, vertexShader } from "./shader";
-import { rotationDegForIndex } from "./layout";
 import type { GalleryItem } from "./types";
 
 type Props = {
@@ -18,13 +17,11 @@ type Props = {
 function ImagePlane({
   item,
   getEl,
-  rotationDeg,
   hovered,
   velocityRef,
 }: {
   item: GalleryItem;
   getEl: () => HTMLElement | null;
-  rotationDeg: number;
   hovered: boolean;
   velocityRef: React.RefObject<number>;
 }) {
@@ -32,7 +29,6 @@ function ImagePlane({
   const materialRef = useRef<THREE.ShaderMaterial>(null);
   const hoverValue = useRef(0);
   const texture = useTexture(item.thumb_url);
-  const rotationRad = THREE.MathUtils.degToRad(rotationDeg);
 
   useEffect(() => {
     // three.js textures are mutable stateful objects by design; setting
@@ -52,11 +48,6 @@ function ImagePlane({
     }
     mesh.visible = true;
 
-    // getBoundingClientRect() is transform-aware, so its center point stays
-    // correct even though the element is CSS-rotated (a center-origin
-    // rotation doesn't move the centroid). offsetWidth/Height, unlike the
-    // rect's width/height, are NOT transform-aware — they give the true,
-    // unrotated box size, which is what the mesh geometry needs.
     const rect = el.getBoundingClientRect();
     const width = el.offsetWidth;
     const height = el.offsetHeight;
@@ -67,7 +58,6 @@ function ImagePlane({
     const pop = 1 + hoverValue.current * 0.08;
     mesh.position.x = rect.left + rect.width / 2 - innerWidth / 2;
     mesh.position.y = -(rect.top + rect.height / 2 - innerHeight / 2);
-    mesh.rotation.z = rotationRad;
     mesh.scale.set(width * pop, height * pop, 1);
 
     const rawVelocity = velocityRef.current ?? 0;
@@ -105,11 +95,10 @@ function ImagePlane({
 function Scene({ items, slotRefs, hoveredId, velocityRef }: Props) {
   return (
     <>
-      {items.map((item, i) => (
+      {items.map((item) => (
         <ImagePlane
           key={item.id}
           item={item}
-          rotationDeg={rotationDegForIndex(i)}
           hovered={hoveredId === item.id}
           velocityRef={velocityRef}
           getEl={() => slotRefs.current.get(item.id) ?? null}
