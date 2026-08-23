@@ -112,12 +112,12 @@ function Scene({ items, slotRefs, hoveredId, velocityRef }: Props) {
 }
 
 function Curvature() {
-  // Subtle barrel distortion so the canvas reads as a curved, wrapping
-  // space rather than a flat plane — kept gentle to keep artwork legible.
+  // Reverse (pincushion) distortion — negative values pinch inward instead
+  // of bulging outward — kept gentle to keep artwork legible.
   const effect = useMemo(
     () =>
       new LensDistortionEffect({
-        distortion: new THREE.Vector2(0.06, 0.06),
+        distortion: new THREE.Vector2(-0.06, -0.06),
         principalPoint: new THREE.Vector2(0, 0),
         focalLength: new THREE.Vector2(1, 1),
       }),
@@ -134,6 +134,11 @@ export default function WebGLLayer(props: Props) {
         dpr={[1, 2]}
         gl={{ antialias: true, alpha: true }}
         camera={{ position: [0, 0, 100], near: 0.1, far: 1000, zoom: 1 }}
+        // r3f sets pointer-events: auto on its own internal wrapper by
+        // default (for its raycasting/event system), which otherwise
+        // silently overrides the pointer-events-none on the div above and
+        // swallows all drag/click input meant for the canvas beneath it.
+        style={{ pointerEvents: "none" }}
       >
         <Suspense fallback={null}>
           <Scene {...props} />

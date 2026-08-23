@@ -101,7 +101,7 @@ export default function WorldCanvas({
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 touch-none select-none"
+      className="fixed inset-0 z-20 touch-none select-none"
       style={{ touchAction: "none", cursor: "grab" }}
     >
       <div style={worldStyle}>

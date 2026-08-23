@@ -4,78 +4,56 @@ import type { GalleryItem } from "@/components/gallery/types";
  * Local placeholder pieces shown on the homepage until there's real approved
  * student work. Home page only falls back to these when the approved list
  * from Supabase is empty — real submissions replace them automatically.
+ *
+ * There are only 6 distinct demo images (public/demo/demo-1..6.svg); they're
+ * reused across the 20 entries below (each reuse keeps that image's own
+ * intrinsic width/height so nothing stretches) purely to populate the
+ * canvas at a more realistic scale for testing the layout/interactions.
  */
-export const DEMO_ITEMS: GalleryItem[] = [
-  {
-    id: "demo-1",
-    student_name: "Amara Voss",
-    title: "Form / Void",
-    width: 600,
-    height: 800,
-    thumb_url: "/demo/demo-1.svg",
-    image_url: "/demo/demo-1.svg",
-    instagram_url: null,
-    behance_url: null,
-    website_url: null,
-  },
-  {
-    id: "demo-2",
-    student_name: "Theo Marsh",
-    title: "Signal / Noise",
-    width: 800,
-    height: 600,
-    thumb_url: "/demo/demo-2.svg",
-    image_url: "/demo/demo-2.svg",
-    instagram_url: null,
-    behance_url: null,
-    website_url: null,
-  },
-  {
-    id: "demo-3",
-    student_name: "Priya Nandan",
-    title: "Grid Study 04",
-    width: 700,
-    height: 700,
-    thumb_url: "/demo/demo-3.svg",
-    image_url: "/demo/demo-3.svg",
-    instagram_url: null,
-    behance_url: null,
-    website_url: null,
-  },
-  {
-    id: "demo-4",
-    student_name: "Leo Fenwick",
-    title: "Halftone",
-    width: 640,
-    height: 800,
-    thumb_url: "/demo/demo-4.svg",
-    image_url: "/demo/demo-4.svg",
-    instagram_url: null,
-    behance_url: null,
-    website_url: null,
-  },
-  {
-    id: "demo-5",
-    student_name: "Iris Okafor",
-    title: "Runout",
-    width: 750,
-    height: 600,
-    thumb_url: "/demo/demo-5.svg",
-    image_url: "/demo/demo-5.svg",
-    instagram_url: null,
-    behance_url: null,
-    website_url: null,
-  },
-  {
-    id: "demo-6",
-    student_name: "Jonas Wren",
-    title: "Tidal",
-    width: 600,
-    height: 900,
-    thumb_url: "/demo/demo-6.svg",
-    image_url: "/demo/demo-6.svg",
-    instagram_url: null,
-    behance_url: null,
-    website_url: null,
-  },
+const IMAGES = [
+  { src: "/demo/demo-1.svg", width: 600, height: 800 },
+  { src: "/demo/demo-2.svg", width: 800, height: 600 },
+  { src: "/demo/demo-3.svg", width: 700, height: 700 },
+  { src: "/demo/demo-4.svg", width: 640, height: 800 },
+  { src: "/demo/demo-5.svg", width: 750, height: 600 },
+  { src: "/demo/demo-6.svg", width: 600, height: 900 },
 ];
+
+const ENTRIES: { name: string; title: string }[] = [
+  { name: "Amara Voss", title: "Form / Void" },
+  { name: "Theo Marsh", title: "Signal / Noise" },
+  { name: "Priya Nandan", title: "Grid Study 04" },
+  { name: "Leo Fenwick", title: "Halftone" },
+  { name: "Iris Okafor", title: "Runout" },
+  { name: "Jonas Wren", title: "Tidal" },
+  { name: "Mira Solano", title: "Afterimage" },
+  { name: "Kofi Adjei", title: "Static Bloom" },
+  { name: "Yuna Park", title: "Negative Space" },
+  { name: "Dario Conti", title: "Split Signal" },
+  { name: "Freya Lindqvist", title: "Overexposed" },
+  { name: "Malik Osei", title: "Loop 03" },
+  { name: "Elena Vasquez", title: "Paper Cut" },
+  { name: "Ravi Deshmukh", title: "Type Study" },
+  { name: "Noor Haddad", title: "Fragment" },
+  { name: "Sasha Petrov", title: "Underlay" },
+  { name: "Camille Girard", title: "Echo Chamber" },
+  { name: "Tomas Novak", title: "Ink Bleed" },
+  { name: "Aaliyah Brooks", title: "Wireframe" },
+  { name: "Hana Kobayashi", title: "Drift" },
+];
+
+export const DEMO_ITEMS: GalleryItem[] = ENTRIES.map((entry, i) => {
+  const image = IMAGES[i % IMAGES.length];
+  return {
+    id: `demo-${i + 1}`,
+    student_name: entry.name,
+    title: entry.title,
+    width: image.width,
+    height: image.height,
+    thumb_url: image.src,
+    image_url: image.src,
+    instagram_url: null,
+    behance_url: null,
+    website_url: null,
+  };
+});
