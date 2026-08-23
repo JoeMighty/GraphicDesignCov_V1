@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="600" height="800">
+  <rect width="600" height="800" fill="#e8261a"/>
+  <rect x="0" y="520" width="600" height="280" fill="#111111"/>
+  <circle cx="300" cy="280" r="180" fill="#111111"/>
+  <circle cx="300" cy="280" r="120" fill="#e8261a"/>
+  <text x="50" y="700" font-family="Arial, sans-serif" font-weight="900" font-size="90" fill="#f5f5f0">FORM</text>
+  <text x="50" y="770" font-family="Arial, sans-serif" font-weight="900" font-size="90" fill="#f5f5f0">VOID</text>
+</svg>

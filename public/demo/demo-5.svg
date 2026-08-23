@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 600" width="750" height="600">
+  <rect width="750" height="600" fill="#7b2ff7"/>
+  <g stroke="#ffe14d" stroke-width="46">
+    <line x1="-100" y1="700" x2="500" y2="-100"/>
+    <line x1="50" y1="700" x2="650" y2="-100"/>
+    <line x1="200" y1="700" x2="800" y2="-100"/>
+    <line x1="350" y1="700" x2="950" y2="-100"/>
+  </g>
+  <rect x="0" y="0" width="750" height="120" fill="#1a0630"/>
+  <text x="36" y="82" font-family="Arial, sans-serif" font-weight="900" font-size="58" fill="#ffe14d">RUNOUT</text>
+</svg>

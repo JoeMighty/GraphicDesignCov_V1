@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <rect width="800" height="600" fill="#1c4fd6"/>
+  <polygon points="0,600 400,120 800,600" fill="#ff8a1e"/>
+  <rect x="0" y="0" width="800" height="140" fill="#0d1b3d"/>
+  <text x="40" y="95" font-family="Arial, sans-serif" font-weight="900" font-size="64" fill="#f5f5f0">SIGNAL / NOISE</text>
+</svg>

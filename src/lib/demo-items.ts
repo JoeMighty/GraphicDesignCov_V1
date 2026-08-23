@@ -1,0 +1,81 @@
+import type { GalleryItem } from "@/components/gallery/types";
+
+/**
+ * Local placeholder pieces shown on the homepage until there's real approved
+ * student work. Home page only falls back to these when the approved list
+ * from Supabase is empty — real submissions replace them automatically.
+ */
+export const DEMO_ITEMS: GalleryItem[] = [
+  {
+    id: "demo-1",
+    student_name: "Amara Voss",
+    title: "Form / Void",
+    width: 600,
+    height: 800,
+    thumb_url: "/demo/demo-1.svg",
+    image_url: "/demo/demo-1.svg",
+    instagram_url: null,
+    behance_url: null,
+    website_url: null,
+  },
+  {
+    id: "demo-2",
+    student_name: "Theo Marsh",
+    title: "Signal / Noise",
+    width: 800,
+    height: 600,
+    thumb_url: "/demo/demo-2.svg",
+    image_url: "/demo/demo-2.svg",
+    instagram_url: null,
+    behance_url: null,
+    website_url: null,
+  },
+  {
+    id: "demo-3",
+    student_name: "Priya Nandan",
+    title: "Grid Study 04",
+    width: 700,
+    height: 700,
+    thumb_url: "/demo/demo-3.svg",
+    image_url: "/demo/demo-3.svg",
+    instagram_url: null,
+    behance_url: null,
+    website_url: null,
+  },
+  {
+    id: "demo-4",
+    student_name: "Leo Fenwick",
+    title: "Halftone",
+    width: 640,
+    height: 800,
+    thumb_url: "/demo/demo-4.svg",
+    image_url: "/demo/demo-4.svg",
+    instagram_url: null,
+    behance_url: null,
+    website_url: null,
+  },
+  {
+    id: "demo-5",
+    student_name: "Iris Okafor",
+    title: "Runout",
+    width: 750,
+    height: 600,
+    thumb_url: "/demo/demo-5.svg",
+    image_url: "/demo/demo-5.svg",
+    instagram_url: null,
+    behance_url: null,
+    website_url: null,
+  },
+  {
+    id: "demo-6",
+    student_name: "Jonas Wren",
+    title: "Tidal",
+    width: 600,
+    height: 900,
+    thumb_url: "/demo/demo-6.svg",
+    image_url: "/demo/demo-6.svg",
+    instagram_url: null,
+    behance_url: null,
+    website_url: null,
+  },
+];

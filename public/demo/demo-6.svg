@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 900" width="600" height="900">
+  <rect width="600" height="900" fill="#0f3d3e"/>
+  <path d="M80,260 C40,140 220,60 320,140 C440,220 460,120 540,220 C620,340 500,440 440,420 C360,400 380,540 260,540 C120,540 80,380 80,260 Z" fill="#ff6f59"/>
+  <path d="M120,700 C160,600 320,600 360,700 C400,800 260,860 180,820 C100,780 80,800 120,700 Z" fill="#f5f5f0"/>
+  <text x="40" y="850" font-family="Arial, sans-serif" font-weight="900" font-size="48" fill="#f5f5f0">TIDAL</text>
+</svg>

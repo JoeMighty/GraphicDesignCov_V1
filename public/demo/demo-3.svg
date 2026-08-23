@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 700" width="700" height="700">
+  <rect width="700" height="700" fill="#f3d9e6"/>
+  <rect x="0" y="0" width="350" height="350" fill="#bff0d8"/>
+  <rect x="350" y="350" width="350" height="350" fill="#bff0d8"/>
+  <circle cx="350" cy="350" r="140" fill="#241f21"/>
+  <circle cx="350" cy="350" r="80" fill="#f3d9e6"/>
+  <text x="40" y="660" font-family="Arial, sans-serif" font-weight="900" font-size="42" fill="#241f21">GRID STUDY 04</text>
+</svg>
