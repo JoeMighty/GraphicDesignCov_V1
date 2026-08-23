@@ -32,7 +32,6 @@ export default function Gallery({ items }: { items: GalleryItem[] }) {
       <SiteHeader />
       <main>
         <Hero count={items.length} />
-        <Marquee />
         <GalleryGrid
           items={items}
           registerSlot={registerSlot}
@@ -134,17 +133,5 @@ function SubmitCta() {
         <span>[optimise your file before upload]</span>
       </div>
     </section>
-  );
-}
-
-function Marquee() {
-  const text = "OPEN CALL — SUBMIT YOUR WORK — COVENTRY GDMA — ";
-  return (
-    <div className="relative z-20 mt-10 mb-20 origin-center -skew-y-1 overflow-hidden border-y-2 border-accent-2 bg-foreground/[0.03] py-3 sm:mt-16 sm:mb-28">
-      <div className="animate-marquee flex w-max gap-8 whitespace-nowrap font-display text-2xl uppercase text-accent-2 sm:text-4xl">
-        <span>{text.repeat(6)}</span>
-        <span>{text.repeat(6)}</span>
-      </div>
-    </div>
   );
 }

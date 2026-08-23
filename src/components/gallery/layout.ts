@@ -10,16 +10,19 @@ import { seededPick } from "@/lib/seededRandom";
 // stable baseline arrangement; GalleryGrid randomizes it client-side after
 // mount so the arrangement is different on every visit/refresh.
 
+// 1-per-row on mobile (all start w-full), widening the possible column
+// count as the viewport grows — down to 1/5 at xl, so up to 5 pieces can
+// share the widest rows.
 const WIDTHS = [
-  "w-full sm:w-1/2 lg:w-2/5",
-  "w-full sm:w-1/2 lg:w-1/3",
-  "w-full sm:w-full lg:w-3/5",
-  "w-full sm:w-1/2 lg:w-1/3",
-  "w-full sm:w-1/2 lg:w-2/5",
-  "w-full sm:w-full lg:w-1/2",
-  "w-full sm:w-1/2 lg:w-1/4",
-  "w-full sm:w-1/2 lg:w-3/5",
-  "w-full sm:w-1/3 lg:w-1/3",
+  "w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5",
+  "w-full sm:w-1/2 md:w-2/3 lg:w-1/2 xl:w-2/5",
+  "w-full sm:w-full md:w-1/3 lg:w-1/4 xl:w-1/5",
+  "w-full sm:w-1/2 md:w-1/2 lg:w-1/3 xl:w-1/4",
+  "w-full sm:w-1/2 md:w-1/3 lg:w-2/5 xl:w-1/5",
+  "w-full sm:w-full md:w-2/3 lg:w-1/2 xl:w-2/5",
+  "w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5",
+  "w-full sm:w-1/2 md:w-1/2 lg:w-1/3 xl:w-2/5",
+  "w-full sm:w-full md:w-1/2 lg:w-2/5 xl:w-1/5",
 ];
 
 const OFFSETS = [

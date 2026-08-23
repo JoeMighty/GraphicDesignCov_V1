@@ -92,21 +92,6 @@ html.has-custom-cursor * {
   }
 }
 
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-
-.animate-marquee {
-  animation: marquee 24s linear infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .animate-marquee {
-    animation: none;
-  }
-}
-
 /* RGB-split glitch on hover — CSS-only fallback for the non-WebGL path
    (the WebGL path gets its own chromatic-aberration shader instead, since
    the DOM image is hidden there). Two colour-shifted duplicates of the
