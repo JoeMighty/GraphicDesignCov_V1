@@ -13,12 +13,12 @@ export const vertexShader = /* glsl */ `
     // regardless of the thumbnail's on-screen dimensions.
     pos.x += uVelocity * (uv.y - 0.5);
 
-    // Hover ripple — a gentle in-plane wobble (XY, not Z: this camera is
-    // orthographic, so pure depth displacement wouldn't be visible).
-    float waveX = sin(uv.y * 6.0 + uTime * 3.0) * uHover;
-    float waveY = sin(uv.x * 6.0 + uTime * 3.0) * uHover;
-    pos.x += waveX * 0.035;
-    pos.y += waveY * 0.035;
+    // Hover ripple — an assertive in-plane wobble (XY, not Z: this camera
+    // is orthographic, so pure depth displacement wouldn't be visible).
+    float waveX = sin(uv.y * 7.0 + uTime * 4.0) * uHover;
+    float waveY = sin(uv.x * 5.0 + uTime * 3.2) * uHover;
+    pos.x += waveX * 0.09;
+    pos.y += waveY * 0.07;
 
     gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
   }

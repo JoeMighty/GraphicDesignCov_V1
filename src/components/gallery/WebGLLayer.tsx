@@ -48,12 +48,13 @@ function ImagePlane({
     }
     mesh.visible = true;
 
+    hoverValue.current = THREE.MathUtils.damp(hoverValue.current, hovered ? 1 : 0, 5, delta);
+
     const { innerWidth, innerHeight } = window;
+    const pop = 1 + hoverValue.current * 0.07;
     mesh.position.x = rect.left + rect.width / 2 - innerWidth / 2;
     mesh.position.y = -(rect.top + rect.height / 2 - innerHeight / 2);
-    mesh.scale.set(rect.width, rect.height, 1);
-
-    hoverValue.current = THREE.MathUtils.damp(hoverValue.current, hovered ? 1 : 0, 6, delta);
+    mesh.scale.set(rect.width * pop, rect.height * pop, 1);
 
     const rawVelocity = velocityRef.current ?? 0;
     const targetSkew = THREE.MathUtils.clamp(rawVelocity, -80, 80) * 0.35 / rect.width;
