@@ -79,13 +79,11 @@ export function useCanvasCamera() {
     }
 
     function onPointerDown(e: PointerEvent) {
-      try {
-        el!.setPointerCapture(e.pointerId);
-      } catch {
-        // Pointer capture can fail for synthetic/edge-case pointer ids —
-        // panning still works without it, just without capture-outside-
-        // element guarantees.
-      }
+      // Deliberately not using setPointerCapture: the container already
+      // covers the full viewport (so the pointer can't leave it mid-drag
+      // anyway), and capture retargets the eventual native `click` event to
+      // the capturing element — which broke clicks on the artwork buttons
+      // nested inside, since the click never bubbled through to them.
       pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
       stopInertia();
       if (pointers.current.size === 1) {
