@@ -8,10 +8,14 @@ import { layoutForIndex } from "./layout";
 import type { GalleryItem } from "./types";
 
 // Deterministic pseudo-random in [0, 1), seeded by index — same value on
-// server and client (avoids hydration mismatches from Math.random()).
+// server and client. Integer/bitwise math only (no Math.sin, which can
+// differ in its last bit between server and browser JS engines and was
+// causing a hydration mismatch here).
 function seededRandom(seed: number) {
-  const x = Math.sin(seed * 9301 + 49297) * 233280;
-  return x - Math.floor(x);
+  let t = seed + 0x6d2b79f5;
+  t = Math.imul(t ^ (t >>> 15), t | 1);
+  t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+  return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
 }
 
 export default function GalleryGrid({
